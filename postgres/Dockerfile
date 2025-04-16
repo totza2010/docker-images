@@ -23,6 +23,10 @@ git clone https://github.com/pksunkara/pgx_ulid.git /tmp/pgx_ulid
 cd /tmp/pgx_ulid
 cargo pgx install --pg-config /usr/lib/postgresql/${PG_MAJOR}/bin/pg_config
 
+# ✅ คัดลอก extension ไปยัง path ของ PostgreSQL
+cp ~/.pgx/pgx-install/pg${PG_MAJOR}/share/extension/pgx_ulid.control /usr/share/postgresql/${PG_MAJOR}/extension/
+cp ~/.pgx/pgx-install/pg${PG_MAJOR}/lib/pgx_ulid.so /usr/lib/postgresql/${PG_MAJOR}/lib/
+
 # ทำความสะอาด
 cd /
 rm -rf /tmp/pgx_ulid
