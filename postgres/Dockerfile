@@ -8,7 +8,11 @@ apt-get install -y --no-install-recommends \
   postgresql-server-dev-${PG_MAJOR} \
   git \
   curl \
-  ca-certificates
+  ca-certificates \
+  rustc \
+  cargo \
+  pkg-config \
+  libssl-dev
 
 # ติดตั้ง Rust (ใหม่สุด)
 curl https://sh.rustup.rs -sSf | bash -s -- -y
