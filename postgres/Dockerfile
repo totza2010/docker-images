@@ -15,25 +15,22 @@ apt-get install -y --no-install-recommends \
   libssl-dev
 
 # ติดตั้ง Rust
-curl https://sh.rustup.rs -sSf | bash -s -- -y
-. "$HOME/.cargo/env"
+RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
+ENV PATH="/root/.cargo/bin:${PATH}"
 
-# ดาวน์โหลด pgx_ulid
-git clone https://github.com/pksunkara/pgx_ulid.git /tmp/pgx_ulid
-cd /tmp/pgx_ulid
+# Clone pgx_ulid
+RUN git clone https://github.com/pksunkara/pgx_ulid.git /tmp/pgx_ulid
 
-# Build ด้วย cargo ตรง ๆ โดยใช้ feature pg17
-PGX_PG_CONFIG=/usr/lib/postgresql/${PG_MAJOR}/bin/pg_config \
-cargo build --release --no-default-features --features pg17
+# Build pgx_ulid
+WORKDIR /tmp/pgx_ulid
+RUN PGX_PG_CONFIG=/usr/lib/postgresql/17/bin/pg_config \
+    cargo build --release --no-default-features --features pg17
 
-# สร้าง path ปลายทางของ extension
-mkdir -p /usr/share/postgresql/${PG_MAJOR}/extension
-mkdir -p /usr/lib/postgresql/${PG_MAJOR}/lib
-
-# คัดลอกไฟล์ไปที่ Postgres
-cp ./pgx_ulid.control /usr/share/postgresql/${PG_MAJOR}/extension/
-cp ./target/release/libpgx_ulid.so /usr/lib/postgresql/${PG_MAJOR}/lib/
-
+# Copy .so and .control
+RUN mkdir -p /usr/share/postgresql/17/extension \
+ && mkdir -p /usr/lib/postgresql/17/lib \
+ && cp ./pgx_ulid.control /usr/share/postgresql/17/extension/ \
+ && cp ./target/release/libpgx_ulid.so /usr/lib/postgresql/17/lib/
 # cleanup
 cd /
 rm -rf /tmp/pgx_ulid
