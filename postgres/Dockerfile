@@ -20,7 +20,7 @@ export PATH="/root/.cargo/bin:$PATH"
 
 # ติดตั้ง pgx
 cargo install cargo-pgx --locked
-cargo pgx init --pg${PG_MAJOR}=/usr/lib/postgresql/${PG_MAJOR}/bin/postgres
+cargo pgx init --pg15=/usr/lib/postgresql/${PG_MAJOR}/bin/postgres
 
 # ดาวน์โหลดและติดตั้ง pgx_ulid
 git clone https://github.com/pksunkara/pgx_ulid.git /tmp/pgx_ulid
