@@ -3,8 +3,6 @@ ARG PG_MAJOR=17
 
 FROM postgres:${PG_MAJOR}-bookworm
 
-COPY --from=binary /pgvecto-rs-binary-release.deb /tmp/vectors.deb
-
 RUN <<EOR
 # อัปเดตและติดตั้งเครื่องมือที่จำเป็น
 apt-get update
