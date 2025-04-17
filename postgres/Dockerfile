@@ -8,4 +8,5 @@ RUN apt-get update && apt-get install -y curl \
  && apt-get install -y /tmp/pgx_ulid.deb \
  && rm /tmp/pgx_ulid.deb
 
-CMD ["postgres"]
+CMD ["postgres", \
+   "-c", "shared_preload_libraries=pgx_ulid"]
